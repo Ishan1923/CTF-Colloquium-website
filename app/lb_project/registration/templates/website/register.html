@@ -1,0 +1,202 @@
+{% load static tailwind_tags %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verge 3D Registration</title>
+</head>
+<script>
+    document.addEventListener("click", function (e) {
+      const bubble = document.createElement("div");
+      const size = Math.random() * 50 + 30; // Random size between 30 and 80px
+      const x = e.clientX;
+      const y = e.clientY;
+  
+      bubble.style.position = "absolute";
+      bubble.style.top = `${y - size / 2}px`;
+      bubble.style.left = `${x - size / 2}px`;
+      bubble.style.width = `${size}px`;
+      bubble.style.height = `${size}px`;
+      bubble.style.borderRadius = "50%";
+      bubble.style.backgroundColor = `rgba(59, 130, 246, 0.6)`; // Blue color
+      bubble.style.animation = "bubble 1s ease-out forwards";
+  
+      // Append the bubble to the container
+      document.getElementById("bubbles-container").appendChild(bubble);
+  
+      // Remove the bubble after the animation ends
+      bubble.addEventListener("animationend", () => {
+        bubble.remove();
+      });
+    });
+  </script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Wallpoet&display=swap" rel="stylesheet">
+
+<link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Roboto&effect=shadow-multiple|3d-float|anaglyph|fire-animation">
+
+    {% tailwind_css %}
+    <style>
+        body, html{
+            color: white;
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            background: linear-gradient(45deg, rgb(7, 12, 18) 0%, rgb(23, 40, 61) 50%, rgb(20, 55, 53) 100%);
+        }
+
+        input[type = "text"]{
+            background: none;
+            border-radius: 23px;
+        }
+        input[type = "number"]{
+            background: none;
+            border-radius: 23px;    
+        }
+        input[type = "password"]{
+            background: none;
+            border-radius: 23px;    
+        }
+        option{
+            background: none;
+        }
+        table{
+            font-family: "Poppins";
+        }
+
+
+        @keyframes bubble {
+            0% {
+              transform: scale(0);
+              opacity: 1;
+            }
+            50% {
+              transform: scale(1.5);
+              opacity: 0.6;
+            }
+            100% {
+              transform: scale(2);
+              opacity: 0;
+            }
+          }
+
+
+    </style>
+<body id="bubbles-container">
+    <div class = "flex flex-col justify-center items-center h-screen space-y-6">
+        
+        <form action="#" method = "POST">
+            {% csrf_token %}
+        <div class = "bg-white/10 backdrop-blur-md rounded-lg p-100 shadow-lg w-96" style = "padding: 5em; border-radius: 14px;">
+            <h1 class = "text-5xl text-center p-10 font-effect-anaglyph animate-pulse" style = "padding-bottom: 1em; font-family: Wallpoet;">
+                Register
+            </h1>
+            <table>
+                <tbody>
+                        <tr class = "rows">
+                            <td><label for="username">Name</label></td>
+                            <td>
+                                <input type="text" name="username" id="username" class = "text-white text-2xl rounded-lg bg-white/10 backdrop-blur-10xl">
+                                {% if form.username.errors %}
+                                    <div class="errorlist">
+                                        {% for error in  form.username.errors%}
+                                        <span>
+                                            {{ error }}
+                                        </span>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        <tr class = "rows">
+                            <td><label for="rollno">Roll number</label></td>
+                            <td>
+                                <input type="number" name="rollno" id="rollno" class = "text-white text-2xl rounded-lg bg-white/10 backdrop-blur-10xl">
+                                {% if form.rollno.errors %}
+                                    <div class="errorlist">
+                                        {% for error in  form.rollno.errors%}
+                                        <span>
+                                            {{ error }}
+                                        </span>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        <tr class = "rows">
+                            <td><label for="mailid">Thapar mail id</label></td>
+                            <td>
+                                <input type="text" name="mailid" id="mailid" class = "text-white text-2xl rounded-lg bg-white/10 backdrop-blur-10xl">
+                                {% if form.mailid.errors %}
+                                    <div class="errorlist">
+                                        {% for error in  form.mailid.errors%}
+                                        <span>
+                                            {{ error }}
+                                        </span>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        <tr class = "rows">
+                            <td><label for="team_name">Team name</label></td>
+                            <td>
+                                <input type="text" name="team_name" id="team_name" class = "text-white text-2xl rounded-lg bg-white/10 backdrop-blur-10xl">
+                                {% if form.team_name.errors %}
+                                    <div class="errorlist">
+                                        {% for error in  form.team_name.errors%}
+                                        <span>
+                                            {{ error }}
+                                        </span>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        <tr class = "rows">
+                            <td><label for="hostel">hostel</label></td>
+                            <td><select name="hostel" id="hostel" class = "text-white text-2xl rounded-lg bg-white/10 backdrop-blur-10xl">
+                                    {% for value, label in form.hostel.field.choices %}
+                                        <option class = "text-black" value="{{ value }}"
+                                            {% if form.hostel.value == value %}
+                                                selected
+                                            {% endif %} name = "hostel" id = "hostel">
+                                            {{ value }}
+                                        </option>
+                                    {% endfor %}
+                                </select>
+                                {% if form.hostel.errors %}
+                                <div class="errorlist">
+                                    {% for error in  form.hostel.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>{% endif %}
+                            </td>
+                        </tr>
+                        <br>
+                        <br>
+                        <tr class = "rows">
+                            <td><label for="password1">Password</label></td>
+                            <td><input type="password" name="password1" id="password1" class = "text-white text-2xl rounded-lg backdrop-blur-10xl"></td>
+                        </tr>
+                        <tr class = "rows">
+                            <td><label for="password2">Confirm Password</label></td>
+                            <td><input type="password" name="password2" id="password2" class = "text-white text-2xl rounded-lg backdrop-blur-10xl"></td>
+                        </tr>
+                </tbody>
+            </table>
+            {% comment %} {{ form.as_p}} {% endcomment %}
+            <center style = "padding-top: 23px;">
+                    <button type="submit" class = "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-2xl">
+                        Next
+                    </button>
+            </center>
+        </div>
+    </form>
+    </div>
+</body>
+</html>

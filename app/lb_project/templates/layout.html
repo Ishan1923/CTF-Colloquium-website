@@ -1,0 +1,116 @@
+{% load static tailwind_tags %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        {% block title %}
+            Default 
+        {% endblock %}
+    </title>
+    <script>
+        document.addEventListener("click", function (e) {
+          const bubble = document.createElement("div");
+          const size = Math.random() * 50 + 30; // Random size between 30 and 80px
+          const x = e.clientX;
+          const y = e.clientY;
+      
+          bubble.style.position = "absolute";
+          bubble.style.top = `${y - size / 2}px`;
+          bubble.style.left = `${x - size / 2}px`;
+          bubble.style.width = `${size}px`;
+          bubble.style.height = `${size}px`;
+          bubble.style.borderRadius = "50%";
+          bubble.style.backgroundColor = `rgba(59, 130, 246, 0.6)`; // Blue color
+          bubble.style.animation = "bubble 1s ease-out forwards";
+      
+          // Append the bubble to the container
+          document.getElementById("bubbles-container").appendChild(bubble);
+      
+          // Remove the bubble after the animation ends
+          bubble.addEventListener("animationend", () => {
+            bubble.remove();
+          });
+        });
+
+
+
+
+        
+      </script>
+      
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Roboto&effect=shadow-multiple|3d-float|anaglyph|fire-animation">
+
+    {% tailwind_css %}
+    <style>
+        body, html{
+            color: white;
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            background: radial-gradient(circle, rgb(17, 29, 46) 0%, rgb(23, 40, 61) 50%, rgb(25, 71, 68) 100%);
+        }
+        {% comment %} h2{
+            font-family: 'Roboto';
+        } {% endcomment %}
+         .logo{
+            width: 10em;
+            height: auto;
+         }
+         @keyframes bubble {
+            0% {
+              transform: scale(0);
+              opacity: 1;
+            }
+            50% {
+              transform: scale(1.5);
+              opacity: 0.6;
+            }
+            100% {
+              transform: scale(2);
+              opacity: 0;
+            }
+          }
+        </style>
+    
+</head>
+<body id="bubbles-container">
+        <div class="flex flex-col justify-center items-center h-screen space-y-6">
+            <div>
+            <img src="{% static 'images/ISTEWhite.png' %}" alt="ISTE logo" class = "logo">
+            </div>
+            <div class="text-9xl">
+                <center>
+                    <div class="animate-bounce" id = "MainTitle">
+                        <div class = "font-effect-anaglyph">
+                            {% block content %}
+                                Landing Page
+                            {% endblock %}
+                        </div>
+                    </div>
+                </center>
+            </div>
+            <div class = "text-3xl p-6 mt-16 sm:mt-20 lg:mt-32">
+                <a href="/register/register">
+                    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                        {% block button_registration %}
+                            Register
+                        {% endblock %}
+                    </button>
+                </a> 
+                <a href="/api/mleaderboard">
+                    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                        {% block button_leaderboard %}
+                            Leaderboard
+                        {% endblock %}
+                    </button>
+                </a>           
+            </div>
+        </div>
+    </div>
+    
+</body>
+</html>
