@@ -15,7 +15,7 @@ from rest_framework.permissions import AllowAny
 #Endpoint to update or create a team's score
 
 class UpdateTeamScore(APIView):
-    permission_classes = AllowAny
+    permission_classes = [AllowAny]
     def post(self, request, format = None):
         team_name = request.data.get('team_name')
         score = request.data.get('score')
