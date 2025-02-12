@@ -7,6 +7,7 @@ from .serializers import TeamScoreSerializer
 from django.views import View
 from django.http import JsonResponse
 from .models import TeamScore
+from rest_framework.permissions import AllowAny
 
 # Create your views here.
 
@@ -14,6 +15,7 @@ from .models import TeamScore
 #Endpoint to update or create a team's score
 
 class UpdateTeamScore(APIView):
+    permission_classes = AllowAny
     def post(self, request, format = None):
         team_name = request.data.get('team_name')
         score = request.data.get('score')
