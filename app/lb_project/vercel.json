@@ -2,14 +2,16 @@
   "version": 2,
   "builds": [
     {
-      "src": "manage.py",
+      "src": "lb_project/wsgi.py",
       "use": "@vercel/python"
     },
     {
-      "src": "app/lb_project/lb_project/wsgi.py",
-      "use": "@vercel/python"
+      "src": "build_files.sh",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "staticfiles"
+      }
     }
-    
   ],
   "routes": [
     {
@@ -18,7 +20,7 @@
     },
     {
       "src": "/(.*)",
-      "dest": "app/lb_project/lb_project/wsgi.py"
+      "dest": "lb_project/wsgi.py"
     }
   ]
 }
