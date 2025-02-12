@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-hmozp(fav#c)z!l44&vhn#_(%arl9w^yw5i+--!(pin5$9b4j2
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["colloquium11ctf.com", "localhost"]
+ALLOWED_HOSTS = ["colloquium11ctf.com", "localhost", ".vercel.app"]
 
 
 # Application definition
