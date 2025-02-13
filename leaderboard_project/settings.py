@@ -26,7 +26,12 @@ SECRET_KEY = 'django-insecure-11wtaf@*@)$nxhyq39d4=09zed+848j*4w5$(!w!m^_hk9d*hw
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['ctf11-450715.appspot.com', 'colloquium11ctf.com']
+ALLOWED_HOSTS = [
+    '35.196.218.211',
+    '127.0.0.1',
+    'nomadic-buffer-450805-u3.ue.r.appspot.com'
+]
+
 #'ctf11-450715.appspot.com', 'colloquium11ctf.com'
 
 # Application definition
