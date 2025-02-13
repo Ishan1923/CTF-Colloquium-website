@@ -1,0 +1,18 @@
+runtime: python312
+env: flex
+
+
+entrypoint: gunicorn -b :$PORT leaderboard_project.wsgi:application
+
+# manual_scaling:
+#   instances: 1
+
+# resources:
+#   cpu: 1
+#   memory_gb: 1
+#   disk_size_gb: 10
+
+# env_variables:
+#   SECRET_KEY: "django-insecure-11wtaf@*@)$nxhyq39d4=09zed+848j*4w5$(!w!m^_hk9d*hw"
+#   DEBUG: "False"
+  # DATABASE_URL: "your-database-connection-string"
