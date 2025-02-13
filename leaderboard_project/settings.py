@@ -44,6 +44,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'corsheaders',
+
     #third-party frameworks
     'rest_framework',
 
@@ -55,6 +57,10 @@ INTERNAL_IPS = ['127.0.0.1']
 NPM_BIN_PATH = r"C:\\Program Files\\nodejs\\npm.cmd"
 
 MIDDLEWARE = [
+
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
+
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -62,8 +68,17 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware'
 ]
+
+# CORS_ALLOWED_ORIGINS = [
+#     "http://localhost:3000", #add unity webgl origin here
+#     "https://nomadic-buffer-450805-u3.ue.r.appspot.com", #website deployed domain
+# ]
+
+CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_CREDENTIALS = True
+
 
 ROOT_URLCONF = 'leaderboard_project.urls'
 
