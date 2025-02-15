@@ -5,6 +5,7 @@ from rest_framework import status
 from rest_framework.permissions import AllowAny  # Import AllowAny permission
 from .models import TeamScore
 from .serializers import TeamScoreSerializer
+from django.shortcuts import render
 
 class UpdateTeamScore(APIView):
     permission_classes = [AllowAny]  # Allow unauthorized access
@@ -25,3 +26,6 @@ class LeaderboardList(ListAPIView):
     permission_classes = [AllowAny]  # Allow unauthorized access
     queryset = TeamScore.objects.order_by('-score')
     serializer_class = TeamScoreSerializer
+
+def leaderboard(request):
+    return render(request, 'leaderboard.html')

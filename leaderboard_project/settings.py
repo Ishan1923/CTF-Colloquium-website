@@ -29,7 +29,8 @@ DEBUG = False
 ALLOWED_HOSTS = [
     '35.196.218.211',
     '127.0.0.1',
-    'nomadic-buffer-450805-u3.ue.r.appspot.com'
+    'nomadic-buffer-450805-u3.ue.r.appspot.com',
+    # '*',
 ]
 
 #'ctf11-450715.appspot.com', 'colloquium11ctf.com'
@@ -57,18 +58,15 @@ INTERNAL_IPS = ['127.0.0.1']
 NPM_BIN_PATH = r"C:\\Program Files\\nodejs\\npm.cmd"
 
 MIDDLEWARE = [
-
-    'corsheaders.middleware.CorsMiddleware',
-    'django.middleware.common.CommonMiddleware',
-
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # Serve static files efficiently
+    'corsheaders.middleware.CorsMiddleware',         # Must be near the top
+    'django.middleware.common.CommonMiddleware',     # Only one occurrence
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware'
 ]
 
 # CORS_ALLOWED_ORIGINS = [
@@ -85,7 +83,7 @@ ROOT_URLCONF = 'leaderboard_project.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
