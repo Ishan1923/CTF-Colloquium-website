@@ -1,67 +1,297 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Leaderboard</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Leaderboard</title>
+  <style>
+    /* Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-    <script>
-        function fetchLeaderboard(){
-            fetch("/api/leaderboard/")
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(data => {
-                let tableBody = document.getElementById("leaderboardtable");
-                tableBody.innerHTML = "";
+    /* Background Layer */
+    .background {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -2;
+      background: url("https://via.placeholder.com/1920x1080/000000/444444?text=Netflix+Shows") center center/cover no-repeat;
+      animation: bgFocus 20s ease-in-out infinite;
+    }
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.65);
+      z-index: -1;
+    }
+    @keyframes bgFocus {
+      0% {
+        transform: scale(1);
+        filter: brightness(0.5) contrast(1);
+      }
+      50% {
+        transform: scale(1.15);
+        filter: brightness(0.8) contrast(1.2);
+      }
+      100% {
+        transform: scale(1);
+        filter: brightness(0.5) contrast(1);
+      }
+    }
 
-                data.forEach((entry, index) => {
-                    
-                    
-                    let row = `
-                    
-                        <tr>
-                            <td> ${index + 1}</td>
-                            <td>${entry.team_name}</td>
-                            <td>${entry.score}</td>
-                        </tr>
+    /* Overall Page */
+    body {
+      font-family: Arial, sans-serif;
+      color: #fff;
+      overflow-x: hidden;
+      background: #000;
+    }
+    .container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      position: relative;
+      z-index: 1;
+    }
 
-                    `
+    /* Glass-like leaderboard container */
+    .leaderboard {
+      background: rgba(0, 0, 0, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 15px;
+      padding: 20px;
+      width: 80%;
+      max-width: 800px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 0 15px rgba(255, 0, 0, 0.5);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    th,
+    td {
+      padding: 12px 15px;
+      text-align: left;
+      position: relative;
+    }
+    th {
+      background: rgba(200, 0, 0, 0.7);
+      font-size: 1.1em;
+    }
+    tr:nth-child(even) {
+      background: rgba(0, 0, 0, 0.3);
+    }
 
-                    tableBody.innerHTML += row;
-                });
-            })
-            .catch(error => console.error("Error fetching leaderboard: ", error));
-        }
+    /* Team name styling and pulse animation for top three */
+    .team-name {
+      position: relative;
+      display: inline-block;
+    }
+    .gold .team-name {
+      font-weight: bold;
+      animation: pulseGold 2s infinite;
+    }
+    .silver .team-name {
+      font-weight: bold;
+      animation: pulseSilver 2s infinite;
+    }
+    .bronze .team-name {
+      font-weight: bold;
+      animation: pulseBronze 2s infinite;
+    }
+    @keyframes pulseGold {
+      0%, 100% { transform: scale(1); text-shadow: 0 0 10px #ffd700; }
+      50% { transform: scale(1.05); text-shadow: 0 0 20px #ffd700; }
+    }
+    @keyframes pulseSilver {
+      0%, 100% { transform: scale(1); text-shadow: 0 0 10px #c0c0c0; }
+      50% { transform: scale(1.05); text-shadow: 0 0 20px #c0c0c0; }
+    }
+    @keyframes pulseBronze {
+      0%, 100% { transform: scale(1); text-shadow: 0 0 10px #cd7f32; }
+      50% { transform: scale(1.05); text-shadow: 0 0 20px #cd7f32; }
+    }
 
-        setInterval(fetchLeaderboard, 5000);
-        window.onload = fetchLeaderboard;
+    /* Particle base style */
+    .team-name .particle {
+      position: absolute;
+      top: 50%;
+      left: 100%;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      opacity: 0;
+      animation: particleMove 2s infinite;
+    }
+    @keyframes particleMove {
+      0% {
+        transform: translate(0, 0) scale(1);
+        opacity: 1;
+      }
+      100% {
+        transform: translate(var(--tx), var(--ty)) scale(0);
+        opacity: 0;
+      }
+    }
 
-    </script>
+    /* Gold particles: 5 particles with different delays, directions, and colors */
+    .gold .team-name .particle.particle1 {
+      animation-delay: 0s;
+      --tx: 40px;
+      --ty: -40px;
+      background: #ffd700;
+    }
+    .gold .team-name .particle.particle2 {
+      animation-delay: 0.5s;
+      --tx: 30px;
+      --ty: 10px;
+      background: #ffea00;
+    }
+    .gold .team-name .particle.particle3 {
+      animation-delay: 1s;
+      --tx: 20px;
+      --ty: -30px;
+      background: #fff200;
+    }
+    .gold .team-name .particle.particle4 {
+      animation-delay: 1.5s;
+      --tx: 50px;
+      --ty: 0px;
+      background: #ffc700;
+    }
+    .gold .team-name .particle.particle5 {
+      animation-delay: 2s;
+      --tx: 30px;
+      --ty: 30px;
+      background: #ffe066;
+    }
+
+    /* Silver particles: 3 particles */
+    .silver .team-name .particle.particle1 {
+      animation-delay: 0s;
+      --tx: 30px;
+      --ty: -20px;
+      background: #c0c0c0;
+    }
+    .silver .team-name .particle.particle2 {
+      animation-delay: 0.5s;
+      --tx: 20px;
+      --ty: 10px;
+      background: #d0d0d0;
+    }
+    .silver .team-name .particle.particle3 {
+      animation-delay: 1s;
+      --tx: 25px;
+      --ty: -15px;
+      background: #e0e0e0;
+    }
+
+    /* Bronze particles: 2 particles */
+    .bronze .team-name .particle.particle1 {
+      animation-delay: 0s;
+      --tx: 20px;
+      --ty: -10px;
+      background: #cd7f32;
+    }
+    .bronze .team-name .particle.particle2 {
+      animation-delay: 0.5s;
+      --tx: 15px;
+      --ty: 15px;
+      background: #d08b3b;
+    }
+  </style>
+
+  <script>
+    function fetchLeaderboard() {
+      fetch("/api/leaderboard/")
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+          return response.json();
+        })
+        .then((data) => {
+          let tableBody = document.getElementById("leaderboardtable");
+          tableBody.innerHTML = "";
+
+          data.forEach((entry, index) => {
+            let rowClass = "";
+            let particles = "";
+            if (index === 0) {
+              rowClass = "gold";
+              particles = `
+                <span class="particle particle1"></span>
+                <span class="particle particle2"></span>
+                <span class="particle particle3"></span>
+                <span class="particle particle4"></span>
+                <span class="particle particle5"></span>`;
+            } else if (index === 1) {
+              rowClass = "silver";
+              particles = `
+                <span class="particle particle1"></span>
+                <span class="particle particle2"></span>
+                <span class="particle particle3"></span>`;
+            } else if (index === 2) {
+              rowClass = "bronze";
+              particles = `
+                <span class="particle particle1"></span>
+                <span class="particle particle2"></span>`;
+            }
+
+            let row = `
+              <tr class="${rowClass}">
+                <td><span class="rank-text">${index + 1}</span></td>
+                <td>
+                  <span class="team-name">
+                    ${entry.team_name}
+                    ${particles}
+                  </span>
+                </td>
+                <td>${entry.score}</td>
+              </tr>
+            `;
+            tableBody.innerHTML += row;
+          });
+        })
+        .catch((error) =>
+          console.error("Error fetching leaderboard: ", error)
+        );
+    }
+
+    setInterval(fetchLeaderboard, 5000);
+    window.onload = fetchLeaderboard;
+  </script>
 </head>
 <body>
-    
-    <div>
-        <div>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Rank</th>
-                        <th>Team Name</th>
-                        <th>Score</th>
-                    </tr>
-                </thead>
-                <tbody id = "leaderboardtable">
+  <!-- Background and overlay -->
+  <div class="background"></div>
+  <div class="overlay"></div>
 
-                </tbody>
-            </table>
-        </div>
+  <div class="container">
+    <div class="leaderboard">
+      <table>
+        <thead>
+          <tr>
+            <th>Rank</th>
+            <th>Team Name</th>
+            <th>Score</th>
+          </tr>
+        </thead>
+        <tbody id="leaderboardtable">
+          <!-- Dynamic leaderboard data -->
+        </tbody>
+      </table>
     </div>
-
-
-
+  </div>
 </body>
 </html>
