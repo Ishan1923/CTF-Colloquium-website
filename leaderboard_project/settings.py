@@ -21,7 +21,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-11wtaf@*@)$nxhyq39d4=09zed+848j*4w5$(!w!m^_hk9d*hw'
+SECRET_KEY = ''
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
@@ -114,8 +114,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',  # MariaDB uses the MySQL backend
         'NAME': 'leaderboard',
-        'USER': 'leaderboard_user',
-        'PASSWORD': 'securepassword',
+        'USER': '',
+        'PASSWORD': '',
         'HOST': '35.196.218.211',  # Use 'localhost' if Django and MariaDB are on the same machine
         'PORT': '3306',
     }
