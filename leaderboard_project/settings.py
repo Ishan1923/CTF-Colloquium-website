@@ -27,10 +27,8 @@ SECRET_KEY = ''
 DEBUG = False
 
 ALLOWED_HOSTS = [
-    '35.196.218.211',
-    '127.0.0.1',
-    'nomadic-buffer-450805-u3.ue.r.appspot.com',
-    # '*',
+    
+     '*',
 ]
 
 #'ctf11-450715.appspot.com', 'colloquium11ctf.com'
@@ -54,7 +52,7 @@ INSTALLED_APPS = [
     'leaderboard',
 ]
 
-INTERNAL_IPS = ['127.0.0.1']
+INTERNAL_IPS = ['1']
 NPM_BIN_PATH = r"C:\\Program Files\\nodejs\\npm.cmd"
 
 MIDDLEWARE = [
@@ -116,8 +114,8 @@ DATABASES = {
         'NAME': 'leaderboard',
         'USER': '',
         'PASSWORD': '',
-        'HOST': '35.196.218.211',  # Use 'localhost' if Django and MariaDB are on the same machine
-        'PORT': '3306',
+        'HOST': '',  # Use 'localhost' if Django and MariaDB are on the same machine
+        'PORT': '',
     }
 }
 
